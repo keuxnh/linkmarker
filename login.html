@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link href="login.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+<body>
+  <div class="wrap">
+    <form id="nav" class="nav">
+        <h1 class="login-text">로그인</h1>
+        <p class="login-P">링크마카에 로그인합니다.</p>
+        <div class="login-info">아이디*
+          <div>
+            <input placeholder="  Your Username" type="username" id="signInEmail"/>
+            <i class='bx bxs-user'></i>
+          </div>
+        </div>
+        <div class="login-info">패스워드*
+          <div>
+            <input placeholder="  Your Password" type="password" id="signInPassword"/>
+            <i class='bx bxs-lock-alt'></i>
+          </div>
+        </div>
+        <button class="btn" type="submit" id="signInButton">로그인</button>
+        <p class="login-P">아이디가 없으신가요? <a style="color:rgb(0, 140, 255)" href="signup.html">회원가입</a></p>
+        <a id="exit" style="color:rgb(243, 116, 116)" href="index.html">메인메뉴로 이동하기</a>
+    </form>
+  </div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getDatabase, set, ref, child, get } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCqf1LuqeiggQtROEq25nGrtVbkDfAzuIA",
+      authDomain: "linkmarker-91c5d.firebaseapp.com",
+      projectId: "linkmarker-91c5d",
+      storageBucket: "linkmarker-91c5d.appspot.com",
+      messagingSenderId: "682137742120",
+      appId: "1:682137742120:web:5474672b79d232ce843e1d",
+      measurementId: "G-PQVC69B599"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getDatabase();
+    const auth = getAuth(app);
+    const dbref = ref(db);
+
+    let EmailInp = document.getElementById('signInEmail');
+    let PassInp = document.getElementById('signInPassword');
+    let MainForm = document.getElementById('nav');
+    
+    let SignInUser = evt => {
+      evt.preventDefault();
+      console.log('SignInUser called with email:', EmailInp.value, 'and password:', PassInp.value);
+
+      signInWithEmailAndPassword(auth, EmailInp.value, PassInp.value)
+        .then((credentials) => {
+          console.log('User signed in:', credentials);
+          const userUid = credentials.user.uid;
+          console.log('Fetching user data for UID:', userUid);
+
+          get(child(dbref, 'UsersAuthList/' + userUid)).then((snapshot) => {
+            console.log('Snapshot:', snapshot);
+            if (snapshot.exists()) {
+              console.log('User data exists:', snapshot.val());
+              sessionStorage.setItem("user-info", JSON.stringify({
+                firstname: snapshot.val().firstname
+              }));
+              sessionStorage.setItem("user-creds", JSON.stringify(credentials.user));
+            } else {
+              console.log('No user data found for UID:', userUid);
+              alert('사용자 데이터를 찾을 수 없습니다.');
+            }
+          }).catch((error) => {
+            console.log('Error fetching user data:', error);
+            alert('사용자 데이터를 가져오는 동안 오류가 발생했습니다.');
+          });
+        })
+        .catch((error) => {
+          alert('로그인 오류: ' + error.message);
+          console.log('Authentication error code:', error.code);
+          console.log('Authentication error message:', error.message);
+        });
+    }
+    
+    MainForm.addEventListener('submit', SignInUser);
+  </script>
+</body>
+<script src="script.js"></script>
+</html>

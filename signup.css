@@ -1,0 +1,200 @@
+.jua-regular {
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}  
+
+.poor-story-regular {
+  font-family: "Poor Story", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+*{
+  font-family: "jua", sans-serif;
+  list-style: none;
+  text-decoration: none;
+  border-collapse: collapse;
+  margin: 0px;
+  padding: 0px;
+  color:black
+}
+
+.wrap {
+  background-image: url("img1.jpg");
+  width : 100%;
+  height : 100vh;
+  background-color : rgb(255, 255, 255);
+  display : flex;
+  justify-content: center;
+  align-items : center;
+}
+
+.nav {
+  width : 400px;
+  height : 50vh;
+  background-color: rgba(255,255,192,0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 2px 7px 15px 8px rgba(0,0,0,0.3);
+  border-radius: 30px;
+  text-align: center;
+}
+
+.login-text{
+  color: #4ba5fa;
+  margin-top: 40px;
+}
+
+input{
+  border:0;
+  border-radius: 13px;
+}
+.btn{
+  background-color: #4ba5fa;
+  font-size: 90%;
+  height: 25px;
+  width: 35%;
+  border: 0;
+  margin-top: 10px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.login-info{
+  width: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 10px;
+  color: rgb(182, 182, 182);
+}
+i{
+ position: absolute;
+ color: rgb(167, 167, 167);
+ transform: translate(-150%, 40%)
+}
+
+.login-P{
+  margin-top: 10px;
+  margin-bottom: 50px;
+  font-size: 12px;
+  color: rgb(167, 167, 167);
+}
+@media screen and (max-width: 420px) {
+  .nav {
+      width : 330px;
+      height : 50vh;
+      border-radius: 30px;
+      text-align: center;
+  }
+  .login-info{
+    margin-bottom: 1px;
+  }
+  #signUpEmail{
+    width: 45%;
+    height: 20px;
+  }
+  #signUpUsername{
+    width: 45%;
+    height: 20px;
+  }
+  #signUpPassword{
+    width: 45%;
+    height: 20px;
+  }
+  .btn{
+      font-size: 65%;
+      width: 45%;
+      height: 16px;
+  }
+  .login-P{
+    margin-bottom: 5px;
+  }
+  #exit{
+    font-size: 13px;
+  }
+}
+
+@media screen and (min-width: 420px) {
+  .nav {
+    width : 330px;
+    height : 50vh;
+    border-radius: 30px;
+    text-align: center;
+}
+.login-info{
+  margin-bottom: 1px;
+}
+#signUpEmail{
+  width: 45%;
+  height: 20px;
+}
+#signUpUsername{
+  width: 45%;
+  height: 20px;
+}
+#signUpPassword{
+  width: 45%;
+  height: 20px;
+}
+.btn{
+    font-size: 65%;
+    width: 45%;
+    height: 16px;
+}
+.login-P{
+  margin-bottom: 5px;
+}
+#exit{
+  font-size: 13px;
+}
+}
+
+
+@media screen and (min-width: 720px) {
+  .nav {
+      width : 900px;
+      height : 70vh;
+      border-radius: 30px;
+      text-align: center;
+    }
+    .btn{
+      width: 35%;
+      height: 30px;
+      font-size: 95%;
+      margin-top: 15px;
+  }
+  .login-text{
+      color: #4ba5fa;
+      margin-top: 60px;
+      font-size: 50px;
+  }
+  .login-info{
+      font-size: 15px;
+  }
+  #signUpPassword{
+    width: 35%;
+    height: 30px;
+  }
+  #signUpUsername{
+    width: 35%;
+    height: 30px;
+  }
+  #signUpEmail{
+    width: 35%;
+    height: 30px;
+  }
+  
+  .login-P{
+      font-size: 15px;
+      margin-top: 10px;
+      margin-bottom: 60px;
+  }
+  input{
+      height: 30px;
+      width: 30%;
+  }
+  #exit{
+    font-size: 17px;
+  }
+}

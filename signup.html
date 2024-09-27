@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link href="signup.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+<body>
+  <div class="wrap">
+    <form id="nav" class="nav">
+        <h1 class="login-text">회원가입</h1>
+        <p class="login-P">링크마카에 회원가입합니다.</p>
+        <div class="login-info">아이디*
+          <div>
+            <input placeholder="  Your Username" type="username" id="signUpUsername"/>
+            <i class='bx bxs-user' ></i>
+          </div>
+        </div>
+        <div class="login-info">이메일*
+          <div>
+            <input placeholder="  Your Email" type="email" id="signUpEmail"/>
+            <i class='bx bxs-user' ></i>
+          </div>
+        </div>
+        <div class="login-info">패스워드*
+          <div>
+            <input placeholder="  Your Password"type="password" id="signUpPassword"/>
+            <i class='bx bxs-lock-alt'></i>
+          </div>
+        </div>
+        <button class="btn" type="submit" id="signUpButton">회원가입</button>
+        <p class="login-P">아이디가 있으신가요? <a style="color:rgb(0, 140, 255)" href="login.html">로그인</a></p>
+        <a id="exit" style="color:rgb(243, 116, 116)" href="index.html">메인메뉴로 이동하기</a>
+    </form>
+  </div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCqf1LuqeiggQtROEq25nGrtVbkDfAzuIA",
+  authDomain: "linkmarker-91c5d.firebaseapp.com",
+  projectId: "linkmarker-91c5d",
+  storageBucket: "linkmarker-91c5d.appspot.com",
+  messagingSenderId: "682137742120",
+  appId: "1:682137742120:web:5474672b79d232ce843e1d",
+  measurementId: "G-PQVC69B599"
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getDatabase(app);
+const auth = getAuth(app);
+
+let EmailInp = document.getElementById('signUpEmail');
+let PassInp = document.getElementById('signUpPassword');
+let UsernameInp = document.getElementById('signUpUsername');
+let MainForm = document.getElementById('nav');
+
+let RegisterUser = evt => {
+  evt.preventDefault();
+
+  createUserWithEmailAndPassword(auth, EmailInp.value, PassInp.value)
+  .then((credentials)=>{
+    set(ref(db, 'UserAuthList/' + credentials.user.uid), {
+      Username: UsernameInp.value
+    })
+  })
+  .then(() => {
+    alert("Data saved successfully");
+    window.location.href="login.html"
+    
+  })
+  .catch((error)=>{
+    alert(error.message);
+    console.log(error.code);
+    console.log(error.message);
+  });
+}
+
+MainForm.addEventListener('submit', RegisterUser);
+
+  </script>
+</body>
+
+</html>
